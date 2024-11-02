@@ -1,0 +1,5 @@
+EXTRA_CFLAGS += -I$(TOP)/motorola/kernel/modules/include
+
+focal_fps-y += ff_ctl.o plat-mt6768.o
+
+obj-m += focal_fps.o

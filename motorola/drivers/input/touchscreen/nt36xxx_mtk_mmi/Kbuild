@@ -1,0 +1,21 @@
+# add -Wall to try to catch everything we can.
+EXTRA_CFLAGS += -Wall
+EXTRA_CFLAGS += -I$(TOP)/motorola/kernel/modules/include \
+		-I$(TOP)/motorola/kernel/modules/drivers/input/touchscreen/nt36xxx_mtk_mmi
+
+ifneq ($(filter m y,$(CONFIG_NVT_CHARGE_DETECT)),)
+EXTRA_CFLAGS += -DNVT_CHARGE_DETECT
+endif
+
+ifneq ($(filter m y,$(CONFIG_INPUT_NOVA_MULTI_SUPPLIER)),)
+	EXTRA_CFLAGS += -DNVT_CONFIG_MULTI_SUPPLIER
+endif
+
+ifeq ($(filter m y, $(CONFIG_TOUCHSCREEN_NOVATEK_CHIPSET)),)
+	obj-m := nt36xxx_mtk_mmi.o
+endif
+
+nt36xxx_mtk_mmi-objs += nt36xxx.o
+nt36xxx_mtk_mmi-objs += nt36xxx_ext_proc.o
+nt36xxx_mtk_mmi-objs += nt36xxx_fw_update.o
+nt36xxx_mtk_mmi-objs += nt36xxx_mp_ctrlram.o
